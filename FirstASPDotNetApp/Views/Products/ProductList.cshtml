@@ -1,0 +1,43 @@
+﻿@model ProductListModel
+
+
+
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <td>
+                Product Name
+            </td>
+            <td>
+                Description
+            </td>
+            <td>
+                Price
+            </td>
+            <td>
+                Category
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach(var p in Model.Products)
+    {
+        <tr>
+            <td>
+                @p.Name
+            </td>
+            <td>
+                @p.Description
+            </td>
+            <td>
+                @p.Price
+            </td>
+            <td>
+                @p.Category
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
