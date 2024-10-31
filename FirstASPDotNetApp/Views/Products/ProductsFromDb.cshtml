@@ -48,11 +48,12 @@
                     <a href="/products/edit/@p.Id">edit</a>
                 </td>
                 <td>
-                    <form id="deleteForm" action="/products/delete">
+                    @* <form id="deleteForm" action="/products/delete" method="post">
                         <input type="hidden" name="id" value="@p.Id" />
-                        @* <input type="hidden" name="__RequestVerificationToken" value="@AntiForgery.GetTokens(ViewContext.HttpContext).RequestToken" /> *@
+                        <input type="hidden" name="__RequestVerificationToken" value="@AntiForgery.GetTokens(ViewContext.HttpContext).RequestToken" />
                         <input type="submit" onclick="return confirmDelete()" value="Delete" />
-                    </form>
+                    </form> *@
+                    <button onclick="confirmDelete(@p.Id)">Delete</button>
                 </td>
                 <td>
                     @p.Id
@@ -63,19 +64,24 @@
 </table>
 
 <script>
-    function confirmDelete() {
+    function confirmDelete(id) {
         if (confirm('Are you sure you know what you are doing?')) {
-            $.ajax({
-                type: "POST",
-                url: $("#deleteForm").attr("action"),
-                data: $("#deleteForm").serialize(),
-                success: function (response) {
-                    window.location.href = response;
-                },
-                error: function (xhr, status, error) {
+            // // $.ajax({
+            // //     type: "POST",
+            // //     url: $("#deleteForm").attr("action"),
+            // //     data: $("#deleteForm").serialize(),
+            // //     success: function (response) {
+            // //         window.location.href = response;
+            // //     },
+            // //     error: function (xhr, status, error) {
 
-                }
-            });
+            // //     }
+            // // });
+            $.post('@Url.Action("Delete","Products")', { id: id })
+                .done(function (response) 
+                { 
+                    window.location.href = response; 
+                });
         }
         return false;
     }
